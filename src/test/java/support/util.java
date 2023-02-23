@@ -2,6 +2,8 @@ package support;
 
 import definitions.hooks;
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -17,6 +19,7 @@ import java.util.Set;
 public class util extends hooks {
     public static WebDriverWait wait;
     public static JavascriptExecutor js;
+    public static Alert dialogo;
 
     public util() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
@@ -36,6 +39,14 @@ public class util extends hooks {
     }
     public void scrollVertical(){
         js.executeScript("window.scrollBy(0,1000)");
+    }
+    public void aceptarDialogo(){
+        dialogo = driver.switchTo().alert();
+        dialogo.accept();
+    }
+    public void obtenerTextoDialogo(String mensaje){
+        dialogo = driver.switchTo().alert();
+        Assert.assertEquals(mensaje, dialogo.getText());
     }
     public static void evidencias() throws IOException {
         Date fecha = new Date();

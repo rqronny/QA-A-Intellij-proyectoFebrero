@@ -57,8 +57,10 @@ public class carritoDefinition {
     @Y("ingresa los datos de la tarjeta")
     public void ingresaLosDatosDeLaTarjeta() throws IOException  {
         pagar.escribirNroTarjeta(tarjetaPage.nro_tarjeta);
-        pagar.seleccionarMes(tarjetaPage.mes);
-        pagar.seleccionarAnio(tarjetaPage.anio);
+        //pagar.seleccionarMes(tarjetaPage.mes);
+        //pagar.seleccionarAnio(tarjetaPage.anio);
+        seleccionaElMes(tarjetaPage.mes);
+        seleccionaElAnio(tarjetaPage.anio);
         pagar.escribirCVV(tarjetaPage.cvv);
         evidencias();
     }
@@ -74,5 +76,21 @@ public class carritoDefinition {
         confirmacion.validarMensaje(string);
         confirmacion.mostrarCodigo();
         evidencias();
+    }
+
+    @Y("selecciona el mes {string}")
+    public void seleccionaElMes(String mes) {
+        pagar.seleccionarMes(mes);
+    }
+
+    @Y("selecciona el año {string}")
+    public void seleccionaElAnio(String anio) {
+        pagar.seleccionarAnio(anio);
+    }
+
+    @Entonces("validar el mensaje del cuadro de dialogo {string}")
+    public void validarElMensajeDelCuadroDeDialogo(String msj) {
+        pagar.obtenerTextoDialogo(msj);
+        pagar.aceptarDialogo();
     }
 }
