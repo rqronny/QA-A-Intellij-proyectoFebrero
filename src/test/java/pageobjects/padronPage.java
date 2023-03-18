@@ -31,7 +31,7 @@ public class padronPage extends util {
    // @FindBy(id = "id_graTit") protected WebElement cmbGraTit;
 
     //@FindBy(xpath = "//*[@id='form_nueva_solicitud']/div[3]/span") protected WebElement cmbGraTit;
-    @FindBy(css = "#myModalNuevaSolicitud > div > div > span > span > span.select2-search.select2-search--dropdown > input") protected WebElement txtSearch;
+    @FindBy(xpath = "//*[@class='select2-search__field']") protected WebElement txtSearch;
     @FindBy(className = "select2-results__option--highlighted") protected WebElement optGraTit;
     @FindBy(id = "btn_guaCamSolInt") protected WebElement btnGuaCamSolInt;
     @FindBy(id = "buscador") protected WebElement txtBuscar;
@@ -44,6 +44,11 @@ public class padronPage extends util {
     @FindBy(id = "tituloVistaPrevia") protected WebElement h1TituloVistaPrevia;
     @FindBy(id = "id_solReg") protected WebElement id_solReg;
     @FindBy(id = "pad_numDoc") protected WebElement dniEnPadron;
+    @FindBy(id = "btn_busReg") protected WebElement btnBusReg;
+    @FindBy(id = "btn_GenEnvExc") protected WebElement btnGenEnvExc;
+    @FindBy(id = "buscador") protected WebElement txtBuscador;
+    @FindBy(xpath = "//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]") protected WebElement resBusSolPositivo;
+    @FindBy(xpath = "//*/h4[contains(text(), 'Aviso!!!')]") protected WebElement resBusSolNegativo;
 
     public padronPage() {
         PageFactory.initElements(driver, this);
@@ -159,4 +164,27 @@ public class padronPage extends util {
         wait.until(ExpectedConditions.visibilityOf(dniEnPadron));
         Assert.assertEquals(dniEnPadron.getAttribute("value"),dni);
     }
+    public void clickBuscarRegistro(){
+        wait.until(ExpectedConditions.visibilityOf(btnBusReg));
+        btnBusReg.click();
+    }
+    public void clickGenerarExcel(){
+        wait.until(ExpectedConditions.visibilityOf(btnGenEnvExc));
+        btnGenEnvExc.click();
+    }
+    public boolean buscarResolucion(String numRes){
+        wait.until(ExpectedConditions.visibilityOf(txtBuscador));
+        txtBuscador.sendKeys(numRes);
+
+        if (resBusSolPositivo != null && resBusSolNegativo == null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public void registrarResolucion(){
+        //wait.until(ExpectedConditions.visibilityOf(resBusSol));
+        //txtBuscador.sendKeys(numRes);
+    }
+
 }

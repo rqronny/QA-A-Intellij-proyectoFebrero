@@ -45,7 +45,7 @@ public class padronDefinition {
         hooks.driver.manage().getCookies();
     }
 
-    @Entonces("debería ser redirigido a registrar solicitud")
+    @Y("debería ser redirigido a registrar solicitud")
     public void deberiaSerRedirigidoARegistrarSolicitud() {
         hooks.driver.navigate().to("http://localhost/sigrati-v2/adm/viewSolicitud.php");
     }
@@ -123,5 +123,28 @@ public class padronDefinition {
     @Y("verificar que el padron corresponda al usuario {string}")
     public void verificarQueElPadronCorrespondaAlUsuario(String dni) {
         padron.compararDniConPadron(dni);
+    }
+
+    @Y("redirigirse a enviar padron")
+    public void redirigirseAEnviarPadron() {
+        hooks.driver.navigate().to("http://localhost/sigrati-v2/adm/viewEnviarSunedu.php");
+    }
+
+    @Y("dar click en buscar")
+    public void darClickEnBuscar() {
+        padron.clickBuscarRegistro();
+    }
+
+
+    @Y("dar click en generar excel")
+    public void darClickEnGenerarExcel() {
+        padron.clickGenerarExcel();
+    }
+
+
+    @Entonces("se registra la solicitud {string} con fecha {string} si no existe")
+    public void seRegistraLaSolicitudConFechaSiNoExiste(String numRes, String fecRes) {
+        hooks.driver.navigate().to("http://localhost/sigrati-v2/adm/viewResoluciones.php");
+
     }
 }
