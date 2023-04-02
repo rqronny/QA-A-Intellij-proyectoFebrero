@@ -21,7 +21,7 @@ public class padronDefinition {
     @Dado("que estoy en la página de inicio de sesión")
     public void queEstoyEnLaPaginaDeInicioDeSesion() {
 
-        hooks.driver.get("http://localhost/sigrati-v2/adm/");
+        hooks.driver.get("http://sigrati.undc.edu.net/adm/");
 
     }
 
@@ -34,7 +34,7 @@ public class padronDefinition {
     public void hagoClicEnElBotonIniciarSesion() {
         padron.clickIniciarSesion();
         // Crear una cookie con nombre, valor y dominio especificados
-        Cookie cookie = new Cookie("PHPSESSID", "15p0e6tbonjk3789tnmplunebk", "http://localhost/sigrati-v2/adm/", "/", null, false, true);
+        Cookie cookie = new Cookie("PHPSESSID", "15p0e6tbonjk3789tnmplunebk", "http://sigrati.undc.edu.net/adm/", "/", null, false, true);
 
 // Establecer la fecha de expiración de la cookie en 7 días a partir de ahora
         Date expiry = new Date();
@@ -47,7 +47,7 @@ public class padronDefinition {
 
     @Y("debería ser redirigido a registrar solicitud")
     public void deberiaSerRedirigidoARegistrarSolicitud() {
-        hooks.driver.navigate().to("http://localhost/sigrati-v2/adm/viewSolicitud.php");
+        hooks.driver.navigate().to("http://sigrati.undc.edu.net/adm/viewSolicitud.php");
     }
 
     @Y("se da click en el boton interno")
@@ -116,7 +116,7 @@ public class padronDefinition {
     @Y("se obtiene el id de la solicitud registrada y se redirecciona a verlo")
     public void seObtieneElIdDeLaSolicitudRegistradaYSeRedireccionaAVerlo() {
         String id_soliditudRegistrado = padron.obtenerIdSolReg();
-        String linkSolicitud="http://localhost/sigrati-v2/adm/viewPadron.php?id="+id_soliditudRegistrado;
+        String linkSolicitud="http://sigrati.undc.edu.net/adm/viewPadron.php?id="+id_soliditudRegistrado;
         hooks.driver.navigate().to(linkSolicitud);
     }
 
@@ -127,7 +127,7 @@ public class padronDefinition {
 
     @Y("redirigirse a enviar padron")
     public void redirigirseAEnviarPadron() {
-        hooks.driver.navigate().to("http://localhost/sigrati-v2/adm/viewEnviarSunedu.php");
+        hooks.driver.navigate().to("http://sigrati.undc.edu.net/adm/viewEnviarSunedu.php");
     }
 
     @Y("dar click en buscar")
@@ -144,7 +144,13 @@ public class padronDefinition {
 
     @Entonces("se registra la solicitud {string} con fecha {string} si no existe")
     public void seRegistraLaSolicitudConFechaSiNoExiste(String numRes, String fecRes) {
-        hooks.driver.navigate().to("http://localhost/sigrati-v2/adm/viewResoluciones.php");
-
+        hooks.driver.navigate().to("http://sigrati.undc.edu.net/adm/viewResoluciones.php");
+        Boolean resolucion = padron.buscarResolucion(numRes);
+        if (resolucion==true){
+            System.out.print("Existe resolucion");
+        }else{
+            System.out.print("No existe resolucion");
+            padron.registrarResolucion(fecRes,numRes);
+        }
     }
 }

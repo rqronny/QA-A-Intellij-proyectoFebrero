@@ -41,7 +41,6 @@ public class padronPage extends util {
     @FindBy(xpath = "//*[@title='Generar Padron']") protected WebElement lnkPorGenerar;
     @FindBy(xpath = "//*[@name='btn_regGraTit']") protected WebElement btnGenerarVistaPrevia;
     @FindBy(id = "btn_guaPad") protected WebElement btnGuardarPadron;
-    @FindBy(id = "tituloVistaPrevia") protected WebElement h1TituloVistaPrevia;
     @FindBy(id = "id_solReg") protected WebElement id_solReg;
     @FindBy(id = "pad_numDoc") protected WebElement dniEnPadron;
     @FindBy(id = "btn_busReg") protected WebElement btnBusReg;
@@ -49,6 +48,11 @@ public class padronPage extends util {
     @FindBy(id = "buscador") protected WebElement txtBuscador;
     @FindBy(xpath = "//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]") protected WebElement resBusSolPositivo;
     @FindBy(xpath = "//*/h4[contains(text(), 'Aviso!!!')]") protected WebElement resBusSolNegativo;
+
+    @FindBy(id = "btn_nueRes") protected WebElement btnNueRes;
+    @FindBy(id = "btn_regRes") protected WebElement btnRegRes;
+    @FindBy(id = "res_fecha") protected WebElement txtResFec;
+    @FindBy(id = "res_nombre") protected WebElement txtResNom;
 
     public padronPage() {
         PageFactory.initElements(driver, this);
@@ -150,7 +154,7 @@ public class padronPage extends util {
         Thread.sleep(5000);
     }
     public void clickGuardarPadron() {
-        wait.until(ExpectedConditions.visibilityOf(h1TituloVistaPrevia));
+        wait.until(ExpectedConditions.visibilityOf(btnGuardarPadron));
         btnGuardarPadron.click();
     }
 
@@ -175,14 +179,30 @@ public class padronPage extends util {
     public boolean buscarResolucion(String numRes){
         wait.until(ExpectedConditions.visibilityOf(txtBuscador));
         txtBuscador.sendKeys(numRes);
-
-        if (resBusSolPositivo != null && resBusSolNegativo == null){
+        //WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(2));
+        //wait2.until(ExpectedConditions.visibilityOf(resBusSolPositivo));
+// Validar si un elemento existe por xpath
+        List<WebElement> elements = driver.findElements(By.xpath("//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]"));
+        if (elements.size() > 0) {
+            // El elemento existe
             return true;
-        }else{
+        } else {
+            // El elemento no existe
             return false;
         }
     }
-    public void registrarResolucion(){
+    public void registrarResolucion(String res_fecha, String res_nombre){
+        wait.until(ExpectedConditions.visibilityOf(btnNueRes));
+        btnNueRes.click();
+
+        wait.until(ExpectedConditions.visibilityOf(txtResFec));
+        txtResFec.sendKeys(res_fecha);
+
+        wait.until(ExpectedConditions.visibilityOf(txtResNom));
+        txtResNom.sendKeys(res_nombre);
+
+        wait.until(ExpectedConditions.visibilityOf(btnRegRes));
+        btnRegRes.click();
         //wait.until(ExpectedConditions.visibilityOf(resBusSol));
         //txtBuscador.sendKeys(numRes);
     }
