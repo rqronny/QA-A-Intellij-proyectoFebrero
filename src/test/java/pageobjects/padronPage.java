@@ -140,7 +140,11 @@ public class padronPage extends util {
 
 
     public void escribirEnInput(String id_input, String texto){
-        WebElement inputElement = driver.findElement(By.id(id_input));
+        // Espera hasta que el elemento sea visible en la página web
+        WebElement inputElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id_input)));
+
+
+        //WebElement inputElement = driver.findElement(By.id(id_input));
         inputElement.sendKeys(texto);
     }
     public void esperarSolicitudAjax(){
@@ -181,18 +185,34 @@ public class padronPage extends util {
     }
     public boolean buscarResolucion(String numRes){
         wait.until(ExpectedConditions.visibilityOf(txtBuscador));
-        txtBuscador.sendKeys(numRes);
+        txtBuscador.sendKeys(""+numRes+"");
         //WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(2));
         //wait2.until(ExpectedConditions.visibilityOf(resBusSolPositivo));
         // Validar si un elemento existe por xpath
-        List<WebElement> elements = driver.findElements(By.xpath("//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]"));
-        if (elements.size() > 0) {
-            // El elemento existe
+
+        System.out.println("El texto recibido es :"+numRes);
+
+        WebElement btnBusRes = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("btn_busRes")));
+        btnBusRes.click();
+
+
+        WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(3));
+        try {
+            WebElement resultado = wait2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]")));
             return true;
-        } else {
-            // El elemento no existe
+        } catch (TimeoutException e) {
+            // Hacer algo si el botón no está presente después de 2 segundos
             return false;
         }
+
+        //List<WebElement> elements = driver.findElements(By.xpath("//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]"));
+        //if (elements.size() > 0) {
+            // El elemento existe
+          //  return true;
+        //} else {
+            // El elemento no existe
+          //  return false;
+        //}
     }
     public void registrarResolucion(String res_fecha, String res_nombre){
         wait.until(ExpectedConditions.visibilityOf(btnNueRes));
