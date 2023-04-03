@@ -53,7 +53,7 @@ public class padronPage extends util {
     @FindBy(id = "btn_regRes") protected WebElement btnRegRes;
     @FindBy(id = "res_fecha") protected WebElement txtResFec;
     @FindBy(id = "res_nombre") protected WebElement txtResNom;
-
+    @FindBy(id = "Int_sol_numDoc") protected WebElement txtIntDNISol;
     public padronPage() {
         PageFactory.initElements(driver, this);
     }
@@ -79,7 +79,9 @@ public class padronPage extends util {
         selectElement.click();
     }
     public void seleccionarOpcion(String opcion){
+        wait.until(ExpectedConditions.elementToBeClickable(txtSearch));
         txtSearch.sendKeys(opcion);
+        wait.until(ExpectedConditions.elementToBeClickable(optGraTit));
         optGraTit.click();
 
     }
@@ -105,6 +107,7 @@ public class padronPage extends util {
 
     public void clickGuardarCambiosSolicitudInterna() {
         wait.until(ExpectedConditions.elementToBeClickable(btnGuaCamSolInt));
+        wait.until(ExpectedConditions.textToBePresentInElementValue(txtIntDNISol, ""));
         btnGuaCamSolInt.click();
     }
 
@@ -181,7 +184,7 @@ public class padronPage extends util {
         txtBuscador.sendKeys(numRes);
         //WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(2));
         //wait2.until(ExpectedConditions.visibilityOf(resBusSolPositivo));
-// Validar si un elemento existe por xpath
+        // Validar si un elemento existe por xpath
         List<WebElement> elements = driver.findElements(By.xpath("//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]"));
         if (elements.size() > 0) {
             // El elemento existe
