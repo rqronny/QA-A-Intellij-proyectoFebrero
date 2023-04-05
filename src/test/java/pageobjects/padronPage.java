@@ -107,7 +107,14 @@ public class padronPage extends util {
 
     public void clickGuardarCambiosSolicitudInterna() {
         wait.until(ExpectedConditions.elementToBeClickable(btnGuaCamSolInt));
-        wait.until(ExpectedConditions.textToBePresentInElementValue(txtIntDNISol, ""));
+        //wait.until(ExpectedConditions.textToBePresentInElementValue(txtIntDNISol, "value"));
+        //wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementValue(By.id("Int_sol_numDoc"), "")));
+        //wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementValue(txtIntDNISol, "")));
+        wait.until(ExpectedConditions.and(
+                ExpectedConditions.textToBePresentInElementValue(By.id("Int_sol_numDoc"), ""),
+                ExpectedConditions.not(ExpectedConditions.attributeToBe(By.id("Int_sol_numDoc"), "value", ""))
+        ));
+
         btnGuaCamSolInt.click();
     }
 
