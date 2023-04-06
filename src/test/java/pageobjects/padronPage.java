@@ -203,13 +203,17 @@ public class padronPage extends util {
         btnBusRes.click();
 
 
-        WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(3));
+        WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            WebElement resultado = wait2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]")));
-            return true;
+
+            WebElement resultado2 = wait2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*/h4[contains(text(), 'Aviso!!!')]")));
+            return false;
+
+            //WebElement resultado = wait2.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]")));
+            //return true;
         } catch (TimeoutException e) {
             // Hacer algo si el botón no está presente después de 2 segundos
-            return false;
+            return true;
         }
 
         //List<WebElement> elements = driver.findElements(By.xpath("//*/strong/div[contains(text(), 'Mostrando 1 al 1 de 1 registros')]"));
